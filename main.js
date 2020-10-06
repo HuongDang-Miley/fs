@@ -18,12 +18,13 @@
 // - write the randomText.txt data to a new file called verbage.txt inside the content folder and log 'verbage.txt created'
 // - Now create a separate setTimeout function that after 7 seconds deletes the content directory
 
+// My solutions:
 
 const fs = require('fs')
 fs.mkdir('content', (err) => {
     if (err) return console.log(err)
     console.log('content folder created')
-} )
+})
 
 fs.writeFile('randomText.txt', '1st line', (err) => {
     if (err) return console.log(err)
@@ -32,18 +33,52 @@ fs.writeFile('randomText.txt', '1st line', (err) => {
 
 fs.readFile('randomText.txt', 'utf8', (err, info) => {
     if (err) return console.log(err)
-    fs.writeFile('./content/verbage.txt', info, (err)=> {
+    fs.writeFile('./content/verbage.txt', info, (err) => {
         if (err) return console.log(err)
         console.log('successfully write content of randomText to verbage.txt')
     })
-} )
+})
 
-setTimeout(()=> {
+setTimeout(() => {
+    fs.unlinkSync('verbage.txt'), (err) => {
+        if (err) throw err
+        console.log('unlink verbage.txt')
+    }
+
     fs.rmdir('content/verbage.txt', (err) => {
         if (err) return console.log(err)
         console.log('Deleted content directory')
     })
 }
-    ,7000)
 
- 
+    , 1000)
+
+
+// // JD solutions:
+
+// fs.mkdir('content', () => {
+//     console.log('content folder created');
+//     fs.writeFile('randomText.txt', 'This is my new file', (err) => {
+//         if (err) throw err;
+//         console.log('randomText.txt was created');
+//     })
+//     fs.readFile('randomText.txt', 'utf8', (err, info) => {
+//         if (err) throw err;
+//         fs.writeFile('./content/verbage.txt', info, (err) => {
+//             if (err) throw err;
+//             console.log('verbage.txt was created');
+//         })
+//     })
+// })
+
+// setTimeout(() => {
+//     fs.unlinkSync('verbage.txt'), (err) => {
+//         if (err) throw err
+//         fs.rmdir('content/verbage.txt', (err) => {
+//             if (err) return console.log(err)
+//             console.log('Deleted content directory')
+//         })
+//     }
+// }
+//     , 1000)
+
